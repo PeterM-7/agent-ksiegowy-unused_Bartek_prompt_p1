@@ -112,6 +112,18 @@ async def upload_invoice(file: UploadFile = File(...)) -> dict:
 
 
 @router.post(
+    "/upload-and-process",
+    status_code=status.HTTP_201_CREATED,
+    summary="Prześlij i od razu przetwórz dokument",
+)
+async def upload_and_process_invoice(file: UploadFile = File(...)) -> dict:
+    uploaded = await upload_invoice(file)
+    processed = await process_invoice(uploaded["id"])
+    processed["upload_status_code"] = 201
+    return processed
+
+
+@router.post(
     "/{invoice_id}/process",
     summary="Przetwórz dokument (OCR + analiza pól)",
 )

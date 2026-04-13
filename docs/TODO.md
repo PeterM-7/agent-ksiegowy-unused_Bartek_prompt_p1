@@ -38,10 +38,10 @@
 - [x] podstawowa ekstrakcja pól i kategoryzacja regułowa (placeholder pod Bielik)
 
 ## MVP – frontend
-- [ ] formularz uploadu
+- [x] formularz uploadu
 - [ ] widok analizy dokumentu
 - [ ] możliwość edycji danych
-- [ ] tabela przetworzonych faktur
+- [x] tabela przetworzonych faktur
 
 ## MVP – eksport
 - [ ] eksport CSV
