@@ -14,14 +14,14 @@
 - [x] walidacja typów plików
 
 ## MVP – OCR
-- [ ] wybór narzędzia OCR
-- [ ] integracja OCR z backendem
+- [x] wybór narzędzia OCR (Tesseract)
+- [x] integracja OCR z backendem (JPG/PNG)
 - [ ] testy na przykładowych fakturach
-- [ ] zapis tekstu odczytanego z dokumentu
+- [x] zapis tekstu odczytanego z dokumentu
 
 ## MVP – Bielik
 - [ ] przygotowanie promptu / schematu analizy
-- [ ] integracja z modelem Bielik
+- [ ] integracja z modelem Bielik (placeholder: `backend/app/services/bielik.py`)
 - [ ] ekstrakcja podstawowych pól
 - [ ] kategoryzacja wydatków
 - [ ] obsługa błędnych lub niepełnych odpowiedzi
@@ -38,10 +38,10 @@
 - [x] podstawowa ekstrakcja pól i kategoryzacja regułowa (placeholder pod Bielik)
 
 ## MVP – frontend
-- [ ] formularz uploadu
+- [x] formularz uploadu
 - [ ] widok analizy dokumentu
 - [ ] możliwość edycji danych
-- [ ] tabela przetworzonych faktur
+- [x] tabela przetworzonych faktur
 
 ## MVP – eksport
 - [ ] eksport CSV

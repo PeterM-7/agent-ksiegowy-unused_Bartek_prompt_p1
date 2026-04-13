@@ -16,4 +16,9 @@ Katalog frontendu będzie zawierał interfejs użytkownika aplikacji.
 - ekran eksportu lub pobierania danych.
 
 ## Status
-Katalog przygotowany do dalszej implementacji.
+Zaimplementowany prosty frontend MVP w katalogu `frontend/`:
+- upload dokumentu,
+- automatyczne wywołanie processingu bez ręcznego `invoice_id`,
+- czytelna tabela danych faktury (pola księgowe),
+- panel administratora z metadanymi technicznymi i surowym JSON,
+- lista ostatnich dokumentów.
