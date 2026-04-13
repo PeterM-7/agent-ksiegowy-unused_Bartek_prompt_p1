@@ -21,7 +21,7 @@
 
 ## MVP – Bielik
 - [ ] przygotowanie promptu / schematu analizy
-- [ ] integracja z modelem Bielik
+- [ ] integracja z modelem Bielik (placeholder: `backend/app/services/bielik.py`)
 - [ ] ekstrakcja podstawowych pól
 - [ ] kategoryzacja wydatków
 - [ ] obsługa błędnych lub niepełnych odpowiedzi

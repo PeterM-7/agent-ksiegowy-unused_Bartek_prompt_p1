@@ -58,6 +58,8 @@ curl http://127.0.0.1:8000/api/v1/invoices/<ID_Z_UPLOADU>
 
 Uwaga: OCR obrazów (`jpg/png`) działa przez Tesseract (`pytesseract`). PDF-y są czytane przez warstwę tekstową (`pypdf`), a dla skanów PDF bez warstwy tekstowej zwracane jest ostrzeżenie w `processing_summary.warning`.
 
+Ekstrakcja pól faktury (`analysis`) jest na MVP realizowana heurystycznie z tekstu (regex / reguły pod typowe polskie faktury). Model Bielik jest planowany jako kolejny krok dla trudniejszych dokumentów — patrz `backend/app/services/bielik.py` (placeholder).
+
 ### Wymagania systemowe OCR (Tesseract)
 
 - macOS: `brew install tesseract tesseract-lang`

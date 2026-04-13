@@ -137,6 +137,30 @@ button:disabled {
   font-weight: 600;
 }
 
+.tableWrap {
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+.linesTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.linesTable th,
+.linesTable td {
+  border: 1px solid #e2e8f0;
+  padding: 8px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.linesTable th {
+  background: #f8fafc;
+  font-weight: 700;
+}
+
 .factTable td,
 .metaTable td {
   font-weight: 600;

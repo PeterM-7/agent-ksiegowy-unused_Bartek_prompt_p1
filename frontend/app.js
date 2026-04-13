@@ -10,6 +10,7 @@ const factTableBody = document.getElementById("factTableBody");
 const metaTableBody = document.getElementById("metaTableBody");
 const ocrPreviewText = document.getElementById("ocrPreviewText");
 const resultStatusBadge = document.getElementById("resultStatusBadge");
+const linesTableBody = document.getElementById("linesTableBody");
 
 const STORAGE_KEY = "agent_ks_backend_url";
 const DEFAULT_BACKEND_URL = "http://127.0.0.1:8000";
@@ -53,9 +54,42 @@ function setResultBadge(status) {
   resultStatusBadge.textContent = status || "Brak wyniku";
 }
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 function renderTableRows(target, rows) {
   target.innerHTML = rows
-    .map((row) => `<tr><th>${row.label}</th><td>${row.value ?? "-"}</td></tr>`)
+    .map(
+      (row) =>
+        `<tr><th>${escapeHtml(row.label)}</th><td>${escapeHtml(row.value ?? "-")}</td></tr>`,
+    )
+    .join("");
+}
+
+function renderLineItems(items) {
+  if (!items || !items.length) {
+    linesTableBody.innerHTML = `<tr><td colspan="9">Brak pozycji.</td></tr>`;
+    return;
+  }
+  linesTableBody.innerHTML = items
+    .map((row) => {
+      return `<tr>
+        <td>${escapeHtml(row.lp)}</td>
+        <td>${escapeHtml(row.name)}</td>
+        <td>${escapeHtml(row.unit || row.pkwiu_or_unit || "-")}</td>
+        <td>${escapeHtml(row.quantity)}</td>
+        <td>${escapeHtml(row.unit_price_net)}</td>
+        <td>${escapeHtml(row.vat_rate)}</td>
+        <td>${escapeHtml(row.net_amount)}</td>
+        <td>${escapeHtml(row.vat_amount)}</td>
+        <td>${escapeHtml(row.gross_amount)}</td>
+      </tr>`;
+    })
     .join("");
 }
 
@@ -68,12 +102,20 @@ function renderResult(data) {
   renderTableRows(factTableBody, [
     { label: "Numer faktury", value: analysis.invoice_number || "-" },
     { label: "Data wystawienia", value: analysis.issue_date || "-" },
-    { label: "Kwota brutto", value: analysis.gross_amount || "-" },
-    { label: "VAT", value: analysis.vat_amount || "-" },
+    { label: "Data sprzedaży", value: analysis.sale_date || "-" },
+    { label: "Termin zapłaty", value: analysis.payment_due_date || "-" },
+    { label: "Miejsce wystawienia", value: analysis.issue_place || "-" },
+    { label: "NIP sprzedawcy", value: analysis.seller_nip || "-" },
+    { label: "NIP nabywcy", value: analysis.buyer_nip || "-" },
+    { label: "Suma netto", value: analysis.net_amount || "-" },
+    { label: "Suma VAT", value: analysis.vat_amount || "-" },
+    { label: "Suma brutto", value: analysis.gross_amount || "-" },
     { label: "Waluta", value: analysis.currency || "-" },
     { label: "Kategoria kosztu", value: analysis.category || "-" },
     { label: "Status przetwarzania", value: status },
   ]);
+
+  renderLineItems(analysis.line_items);
 
   renderTableRows(metaTableBody, [
     { label: "ID dokumentu", value: shortId(data.id) },
