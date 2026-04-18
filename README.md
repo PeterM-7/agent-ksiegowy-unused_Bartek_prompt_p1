@@ -12,6 +12,24 @@ Użytkownik przesyła skan, zdjęcie lub plik PDF faktury, a system:
 
 Projekt ma na celu ograniczenie ręcznego przepisywania danych z faktur oraz ułatwienie porządkowania i analizy wydatków.
 
+## Logika biznesowa
+
+**Przedmiot domeny.** System obsługuje faktury kosztowe (skan, zdjęcie lub PDF). Biznesowo chodzi o przejście od surowego dokumentu do **uporządkowanego rekordu księgowego**: zestawu pól opisujących transakcję oraz **kategorii wydatku**, które można dalej filtrować, raportować i eksportować.
+
+**Proces end-to-end (docelowy model).** Zgodnie z założeniami produktu i przepływem z `docs/ARCHITECTURE.md` oraz `docs/PRD.md`:
+1. Użytkownik przesyła plik — dokument jest **trwale zapisywany** w systemie (oryginał do audytu i ponownego przetworzenia).
+2. Z dokumentu uzyskiwany jest **tekst** (OCR dla obrazów; dla PDF — warstwa tekstowa, a w przyszłości pełniejsza obsługa skanów).
+3. Z tekstu wyodrębniane są **pola faktury** i proponowana jest **kategoria kosztu** (w docelowej wersji głównie przez model Bielik; patrz poniżej o MVP).
+4. Wynik jest **zapisywany w bazie** i prezentowany użytkownikowi.
+5. Użytkownik **weryfikuje i ewentualnie poprawia** dane (zatwierdzenie ma być źródłem prawdy przed dalszym użyciem danych w rozliczeniach — wymaganie z PRD).
+6. Zatwierdzone lub zaakceptowane rekordy można **przeglądać, filtrować i eksportować** (CSV/XLSX; opcjonalnie arkusze).
+
+**Minimalny zestaw pól (wymagania produktowe).** System ma identyfikować m.in.: numer faktury, datę wystawienia, sprzedawcę (w praktyce także identyfikatory jak NIP), kwoty netto/brutto, VAT, walutę — z możliwością rozszerzenia o dodatkowe daty i pozycje z layoutów typowych dla polskich faktur (szczegóły implementacji MVP: `docs/backend/README.md`).
+
+**Kategoryzacja.** Docelowy słownik kategorii obejmuje m.in. paliwo, transport, usługi, sprzęt, oprogramowanie, gastronomię, materiały biurowe (`docs/PRD.md`). Kategoria jest **propozycją systemu**; użytkownik może ją zmienić przed użyciem danych w rozliczeniach. W wdrożonym MVP część klasyfikacji może być **regułowa** (słowa kluczowe w tekście), z planem przejścia na Bielika dla trudniejszych przypadków.
+
+**Ograniczenia i założenia.** Aplikacja zakłada typowe faktury w języku polskim; jakość automatycznego odczytu zależy od jakości skanu i spójności szablonu dokumentu. System nie zastępuje pełnej księgowości — **automatyzuje wstępne przetwarzanie i porządkowanie**, przy **obowiązkowej** możliwości korekty przez człowieka.
+
 ## Główne funkcje
 - upload faktur w formacie JPG, PNG, PDF,
 - OCR dokumentów,
